@@ -6,10 +6,11 @@ import serial
 import threading
 
 def main():
+    version = "1.0.0"
     #set up GUI window
     window = Tk()
-    window.title("Rate Table Sweep")
-    window.geometry('250x150')
+    window.title("Rate Table Sweep v" + version)
+    window.geometry('300x150')
     now = datetime.now()
     currentTime = now.strftime("%H:%M:%S")
     lblCurrentTime1 = Label(window, text="Current Time: ")
@@ -94,7 +95,7 @@ def main():
                             if not testRunning:
                                 atl.stop()
                                 sleep(2)
-                                exit(0)
+                                return
                             atl.jog(-speed)
                             print("Completion Time: ", completeTime)
                             print("   Current Time: ", datetime.now())
@@ -109,19 +110,19 @@ def main():
                             if not testRunning:
                                 atl.stop()
                                 sleep(2)
-                                exit(0)
+                                return
                             atl.jog(speed)
                             print("Completion Time: ", completeTime)
                             print("Current Time: ", datetime.now())
                             print("  Current Speed:  %d degrees/second" % speed)
                             sleep(1)
-
                     atl.stop()
                 except:
                     print("Rate table operation halted. We'll blame Joe Nguyen or Josh Gibson")
                     startButton.config(state=tkinter.NORMAL)
                     atl.stop()
                     sleep(2)
+                    return
         except:
             print("There was a com port error. Please check the com port and try again.")
             testRunning = False
